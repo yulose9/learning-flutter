@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
               if (user?.emailVerified ?? false) {
                 print('Your are a verified user');
               } else {
-                print('You need to verify your email first');
+                print('You need to verify your email firsts');
               }
               return const Text('Done');
             default:
