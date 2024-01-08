@@ -5,6 +5,7 @@ import 'package:mynotes/firebase_options.dart';
 import 'package:mynotes/views/login_view.dart';
 import 'package:mynotes/views/register_view.dart';
 import 'package:mynotes/views/verify_email_view.dart';
+import 'dart:developer' as devtools show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,7 @@ void main() {
         '/login/': (context) => const LoginView(),
         '/register/': (context) => const RegisterView(),
         '/verify-email/': (context) => const VerifyEmailView(),
+        '/notes/': (context) => const NotesView(),
       },
     ),
   );
@@ -39,14 +41,13 @@ class HomePage extends StatelessWidget {
             final user = FirebaseAuth.instance.currentUser;
             if (user != null) {
               if (user.emailVerified) {
-                return const Text('Email is Verified');
+                return const NotesView();
               } else {
                 return const VerifyEmailView();
               }
             } else {
               return const LoginView();
             }
-            return const Text('Done');
           default:
             return const Scaffold(
               body: Center(
@@ -55,6 +56,44 @@ class HomePage extends StatelessWidget {
             );
         }
       },
+    );
+  }
+}
+
+enum MenuActions {
+  logout,
+}
+
+class NotesView extends StatefulWidget {
+  const NotesView({super.key});
+
+  @override
+  State<NotesView> createState() => _NotesViewState();
+}
+
+class _NotesViewState extends State<NotesView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Main UI'),
+        actions: [
+          PopupMenuButton<MenuActions>(
+            onSelected: (value) {
+              devtools.log(value.toString());
+            },
+            itemBuilder: (context) {
+              return [
+                const PopupMenuItem<MenuActions>(
+                  value: MenuActions.logout,
+                  child: Text('Logout'),
+                )
+              ];
+            },
+          )
+        ],
+      ),
+      body: const Text('Hello World'),
     );
   }
 }
