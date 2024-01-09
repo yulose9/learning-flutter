@@ -5,7 +5,6 @@ import 'package:mynotes/firebase_options.dart';
 import 'package:mynotes/views/login_view.dart';
 import 'package:mynotes/views/register_view.dart';
 import 'package:mynotes/views/verify_email_view.dart';
-import 'dart:developer' as devtools show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +19,8 @@ void main() {
       routes: {
         '/login/': (context) => const LoginView(),
         '/register/': (context) => const RegisterView(),
-        '/verify-email/': (context) => const VerifyEmailView(),
         '/notes/': (context) => const NotesView(),
+        '/verify-email/': (context) => const VerifyEmailView(),
       },
     ),
   );
@@ -89,7 +88,6 @@ class _NotesViewState extends State<NotesView> {
                         .pushNamedAndRemoveUntil('/login/', (route) => false);
                   }
               }
-              devtools.log(value.toString());
             },
             itemBuilder: (context) {
               return [
