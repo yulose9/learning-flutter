@@ -157,6 +157,7 @@ class NotesService {
   }
 
   Future<DatabaseUser?> getUser({required String email}) async {
+    await _ensureDbIsOpen();
     final db = _getDataBaseOrThrow();
     final results = await db.query(
       userTable,
@@ -231,7 +232,9 @@ class NotesService {
   Future<void> _ensureDbIsOpen() async {
     try {
       await open();
-    } on DatabaseAlreadyOpenException {}
+    } on DatabaseAlreadyOpenException {
+      // empty
+    }
   }
 
   Future<void> open() async {
